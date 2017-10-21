@@ -1,4 +1,4 @@
-package com.lli;
+package com.lli.webservice;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -6,13 +6,30 @@ import java.util.Map;
 
 import javax.jws.WebService;
 
-@WebService(targetNamespace = "http://lli.com/",
-    endpointInterface = "com.lli.UserService")
-public class UserServiceImpl implements UserService {
+import org.springframework.stereotype.Component;
+
+/**
+ * 接口实现
+ * 
+ * @author leftso
+ *
+ */
+@WebService(serviceName = "CommonService", // 与接口中指定的name一致
+    targetNamespace = "http://webservice.lli.com/", // 与接口中的命名空间一致,一般是接口的包名倒
+    endpointInterface = "com.lli.webservice.CommonService"// 接口地址
+)
+@Component
+public class CommonServiceImp implements CommonService {
+
+    @Override
+    public String sayHello(String name) {
+
+        return "Hello ," + name;
+    }
 
     private Map<String, User> userMap = new HashMap<String, User>();
 
-    public UserServiceImpl() {
+    public CommonServiceImp() {
         System.out.println("向实体类插入数据");
         User user = new User();
         user.setUserId("411001");
@@ -34,11 +51,6 @@ public class UserServiceImpl implements UserService {
         user.setAge("40");
         user.setUpdateTime(new Date());
         userMap.put(user.getUserId(), user);
-    }
-
-    @Override
-    public String getName(String userId) {
-        return "liyd-" + userId;
     }
 
     @Override
