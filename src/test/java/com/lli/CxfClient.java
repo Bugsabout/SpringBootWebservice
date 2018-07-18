@@ -9,7 +9,7 @@ import com.lli.webservice.User;
 
 public class CxfClient {
     public static void main(String[] args) throws Exception {
-        cl2();
+        cl1();
     }
 
     /**
@@ -18,7 +18,7 @@ public class CxfClient {
     public static void cl1() {
         try {
             // 接口地址
-            String address = "http://localhost:8080/services/CommonService?wsdl";
+            String address = "http://localhost:9999/services/CommonService?wsdl";
             // 代理工厂
             JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
             // 设置代理地址
@@ -46,7 +46,7 @@ public class CxfClient {
         // 创建动态客户端
         JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
         Client client = dcf
-                .createClient("http://localhost:8080/services/CommonService?wsdl");
+                .createClient("http://localhost:9999/services/CommonService?wsdl");
         // getUser 为接口中定义的方法名称 张三为传递的参数 返回一个Object数组
         Object[] objects = client.invoke("getUser", "411001");
         for (Object object : objects) {
@@ -55,7 +55,7 @@ public class CxfClient {
         }
 
         // 输出调用结果
-        System.out.println(objects[0].getClass());
+        System.out.println(((User)objects[0]).getAge());
         System.out.println(objects[0].toString());
     }
 }

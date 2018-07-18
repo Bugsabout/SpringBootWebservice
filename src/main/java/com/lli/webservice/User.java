@@ -11,35 +11,35 @@ public class User implements Serializable {
     private String age;
     private Date updateTime;
 
+    public String getUserId() {
+        return userId;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getUserName() {
-        return username;
-    }
-
     public String getAge() {
         return age;
     }
 
+    public void setAge(String age) {
+        this.age = age;
+    }
+
     public Date getUpdateTime() {
         return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
