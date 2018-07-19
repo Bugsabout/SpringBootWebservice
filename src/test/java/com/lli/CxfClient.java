@@ -1,21 +1,33 @@
 package com.lli;
 
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.XmlUtil;
+import com.lli.webservice.CommonService;
+import com.lli.webservice.User;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-import com.lli.webservice.CommonService;
-import com.lli.webservice.User;
+import java.util.Arrays;
 
 public class CxfClient {
     public static void main(String[] args) throws Exception {
-        cl1();
+        String param = Base64.encode(
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+                "<request>" +
+                "<AHDM>" + Base64.encode("1234") + "</AHDM>" +
+                "</request>");
+        System.out.println(param);
+        cl1(param);
     }
 
     /**
      * 方式1.代理类工厂的方式,需要拿到对方的接口
      */
-    public static void cl1() {
+    public static void cl1(String param) {
         try {
             // 接口地址
             String address = "http://localhost:9999/services/CommonService?wsdl";
@@ -28,10 +40,11 @@ public class CxfClient {
             // 创建一个代理接口实现
             CommonService cs = (CommonService) jaxWsProxyFactoryBean.create();
             // 数据准备
-            String userName = "Leftso";
+//            String userName = "Leftso";
             // 调用代理接口的方法调用并返回结果
-            String result = cs.sayHello(userName);
-            System.out.println("返回结果:" + result);
+            String result = cs.sayHello(param);
+            String decodeStr = Base64.decodeStr(result);
+            System.out.println("返回结果:\n" +decodeStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,7 +52,7 @@ public class CxfClient {
 
     /**
      * 动态调用方式
-     * 
+     *
      * @throws Exception
      */
     public static void cl2() throws Exception {
@@ -55,7 +68,7 @@ public class CxfClient {
         }
 
         // 输出调用结果
-        System.out.println(((User)objects[0]).getAge());
+        System.out.println(((User) objects[0]).getAge());
         System.out.println(objects[0].toString());
     }
 }

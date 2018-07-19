@@ -12,8 +12,8 @@ import javax.jws.WebService;
 )
 public interface CommonService {
     @WebMethod
-    String sayHello(@WebParam(name = "userName") String name);
+    String sayHello(@WebParam(name = "param") String param);
 
     @WebMethod
-    String getUser(@WebParam(name = "xml") String xml);
+    String getUser(@WebParam(name = "param") String param);
 }
