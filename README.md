@@ -145,7 +145,7 @@ public class CxfClient {
 ```
 User{userId='1', username='吹比龙', age='18'}
 ```
-至此，Spring Boot 集成 Werbservice 完成。
+至此，Spring Boot 集成 Werbservice 完成。如果你觉得对你有帮助，不妨请作者喝杯咖啡~
 
 
 
