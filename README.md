@@ -1,6 +1,5 @@
 # SpringBootWebservice
 
-[TOC]
 
 ## 1. WebService是什么
 
@@ -143,7 +142,7 @@ public class CxfClient {
 }
 ```
 注意事项：如果在同一个工程中，上面的 localhost 需要修改成本机的 ip 地址，否则会创建 cxf client 失败。运行一下 client，如果控制台打印出如下信息表示 webservice 服务启动成功：
-```json
+```
 User{userId='1', username='吹比龙', age='18'}
 ```
 至此，Spring Boot 集成 Werbservice 完成。
