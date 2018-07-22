@@ -42,4 +42,22 @@ public class User implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public User() {
+    }
+
+    public User(String userId, String username, String age) {
+        this.userId = userId;
+        this.username = username;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", age='" + age + '\'' +
+                '}';
+    }
 }

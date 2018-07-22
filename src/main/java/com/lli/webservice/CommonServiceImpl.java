@@ -99,9 +99,11 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public String getUser(String param) {
-        Base64.decode(param);
-        String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><name>吹比龙</name>";
-        return xml;
+//        Base64.decode(param);
+//        String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><name>吹比龙</name>";
+//        return xml;
+        User user = new User("1", "吹比龙", "18");
+        return user.toString();
     }
 
 }
