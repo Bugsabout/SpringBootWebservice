@@ -1,8 +1,16 @@
 package com.lli;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
+import org.apache.cxf.service.model.BindingInfo;
+import org.apache.cxf.service.model.BindingMessageInfo;
+import org.apache.cxf.service.model.BindingOperationInfo;
+import org.apache.cxf.service.model.MessagePartInfo;
+import org.apache.cxf.service.model.ServiceInfo;
 
 import cn.hutool.core.codec.Base64;
 
@@ -11,13 +19,12 @@ import com.lli.webservice.User;
 
 public class CxfClient {
     public static void main(String[] args) throws Exception {
-        String param = Base64.encode(
-                "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                "<request>" +
-                "<AHDM>" + Base64.encode("1234") + "</AHDM>" +
-                "</request>");
+        String param = Base64
+                .encode("<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+                        + "<request>" + "<AHDM>" + Base64.encode("1234")
+                        + "</AHDM>" + "</request>");
         System.out.println(param);
-        cl2();
+        cl3();
     }
 
     /**
@@ -36,11 +43,11 @@ public class CxfClient {
             // 创建一个代理接口实现
             CommonService cs = (CommonService) jaxWsProxyFactoryBean.create();
             // 数据准备
-//            String userName = "Leftso";
+            // String userName = "Leftso";
             // 调用代理接口的方法调用并返回结果
             String result = cs.sayHello(param);
             String decodeStr = Base64.decodeStr(result);
-            System.out.println("返回结果:\n" +decodeStr);
+            System.out.println("返回结果:\n" + decodeStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,5 +73,45 @@ public class CxfClient {
         // 输出调用结果
         System.out.println(((User) objects[0]).getAge());
         System.out.println(objects[0].toString());
+    }
+
+    /**
+     * 动态调用方式
+     *
+     * @throws Exception
+     */
+    public static void cl3() throws Exception {
+        JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
+        Client client = dcf
+                .createClient("http://www.webxml.com.cn/WebServices/IpAddressSearchWebService.asmx?wsdl");
+
+        List<ServiceInfo> infos = client.getEndpoint().getService()
+                .getServiceInfos();
+        for (ServiceInfo serviceInfo : infos) {
+            Collection<BindingInfo> dd = serviceInfo.getBindings();
+            for (BindingInfo bindingInfo2 : dd) {
+                Collection<BindingOperationInfo> bb = bindingInfo2
+                        .getOperations();
+                for (BindingOperationInfo bindingOperationInfo : bb) {
+                    System.out.println(bindingOperationInfo.getName().getLocalPart());
+                    BindingMessageInfo inputMessageInfo = bindingOperationInfo
+                            .getInput();
+                    inputMessageInfo.getMessageInfo();
+                    List<MessagePartInfo> parts = inputMessageInfo
+                            .getMessageParts();
+                    for (MessagePartInfo messagePartInfo : parts) {
+                        System.out.println(messagePartInfo.getName().getLocalPart());
+                    }
+                }
+            }
+        }
+        // for (BindingOperationInfo operationInfo :
+        // bindingInfo.getOperations()) {
+        // System.out.println(operationInfo.getInput());
+        // System.out.println(operationInfo.getOutput());
+        // System.out.println(operationInfo.getName());
+        // System.out.println(operationInfo.getName().getLocalPart());
+        // }
+
     }
 }
