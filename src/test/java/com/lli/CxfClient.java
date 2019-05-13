@@ -1,17 +1,13 @@
 package com.lli;
 
-import cn.hutool.core.codec.Base64;
-import cn.hutool.core.util.XmlUtil;
-import com.lli.webservice.CommonService;
-import com.lli.webservice.User;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import java.util.Arrays;
+import cn.hutool.core.codec.Base64;
+
+import com.lli.webservice.CommonService;
+import com.lli.webservice.User;
 
 public class CxfClient {
     public static void main(String[] args) throws Exception {
@@ -21,7 +17,7 @@ public class CxfClient {
                 "<AHDM>" + Base64.encode("1234") + "</AHDM>" +
                 "</request>");
         System.out.println(param);
-        cl1(param);
+        cl2();
     }
 
     /**
